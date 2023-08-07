@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -12,7 +13,7 @@ export default function Product() {
   return (
     <>
       <h2>Product {id} Page</h2>
-      <button onClick={back}>Back</button>
+      <Button onClick={back}>Back</Button>
     </>
   );
 }
