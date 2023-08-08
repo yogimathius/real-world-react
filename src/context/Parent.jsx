@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import CounterContext from "./CounterContext";
 import Count from "./Count";
 import InBetween from "./InBetween";
+import reducer from "../reducer/reducer";
 
 function CounterProvider({ value, children }) {
   return (
@@ -10,11 +11,11 @@ function CounterProvider({ value, children }) {
 }
 
 export default function Parent() {
-  const [count, setCount] = useState(0);
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
 
   const counterObj = {
-    count,
-    setCount,
+    state,
+    dispatch,
   };
 
   return (
