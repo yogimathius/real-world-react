@@ -7,6 +7,7 @@ import Products from "./components/Products";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Parent from "./components/context/Parent";
+import RefDemo from "./components/references/RefDemo";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<Product />} />
             <Route path="/counter" element={<Parent />} />
+            <Route path="/references" element={<RefDemo />} />
           </Routes>
         </BrowserRouter>
       </header>

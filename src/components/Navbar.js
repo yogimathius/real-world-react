@@ -14,6 +14,9 @@ const Navbar = () => {
       <Link to="/products">
         <Button>Products</Button>
       </Link>
+      <Link to="/references">
+        <Button>References</Button>
+      </Link>
     </div>
   );
 };
