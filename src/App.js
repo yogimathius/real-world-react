@@ -6,7 +6,7 @@ import Product from "./components/Product";
 import Products from "./components/Products";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Parent from "./context/Parent";
+import Parent from "./components/context/Parent";
 
 function App() {
   return (

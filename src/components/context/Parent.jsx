@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import CounterContext from "./CounterContext";
 import Count from "./Count";
 import InBetween from "./InBetween";
-import reducer from "../reducer/reducer";
+import reducer from "../../reducer/reducer";
 
 function CounterProvider({ value, children }) {
   return (
