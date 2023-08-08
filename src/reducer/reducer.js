@@ -4,4 +4,10 @@ export default function reducer(state, action) {
       count: state.count + 1,
     };
   }
+
+  if (action.type === "remove_count") {
+    return {
+      count: state.count - 1,
+    };
+  }
 }
