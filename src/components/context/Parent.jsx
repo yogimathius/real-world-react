@@ -1,8 +1,9 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useRef } from "react";
 import CounterContext from "./CounterContext";
 import Count from "./Count";
 import InBetween from "./InBetween";
 import reducer from "../../reducer/reducer";
+import { Button } from "@mui/material";
 
 function CounterProvider({ value, children }) {
   return (
@@ -12,10 +13,18 @@ function CounterProvider({ value, children }) {
 
 export default function Parent() {
   const [state, dispatch] = useReducer(reducer, { count: 0 });
+  const countRef = useRef();
 
   const counterObj = {
     state,
     dispatch,
+  };
+  countRef.current = state.count;
+
+  const showAlert = () => {
+    setTimeout(() => {
+      alert(`the current count is ${countRef.current}`);
+    }, 2000);
   };
 
   return (
@@ -24,6 +33,7 @@ export default function Parent() {
       <CounterProvider value={counterObj}>
         <Count />
         <InBetween />
+        <Button onClick={showAlert}>Show alert</Button>
       </CounterProvider>
     </div>
   );
