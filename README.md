@@ -1,70 +1,300 @@
-# Getting Started with Create React App
+# M08W21 - Real World React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### To Do
 
-## Available Scripts
+- [ ] React Router
+- [ ] MUI
+- [ ] `useContext`
+- [ ] `useReducer`
+- [ ] `useRef`
 
-In the project directory, you can run:
+### React Router
 
-### `npm start`
+React Router is a powerful library for handling routing in React applications. It allows you to create a navigation system with clickable links, nested routes, and dynamic routing. To use React Router, you need to install the `react-router-dom` package.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```jsx
+import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+const App = () => {
+  return (
+    <Router>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <Link to="/products">Products</Link>
 
-### `npm test`
+      <Routes>
+        <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
+  );
+};
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You can also use the `useParams` hook to access parameters from the URL inside child components.
 
-### `npm run build`
+```jsx
+import { useParams, Routes, Route, Link } from "react-router-dom";
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+const Products = () => {
+  return (
+    <div>
+      <nav>
+        <Link to="/products/2">Product #2</Link>
+        <br />
+        <Link to="/products/3">Product #3</Link>
+        <br />
+        <Link to="/products/4">Product #4</Link>
+        <br />
+        <Link to="/products/5">Product #5</Link>
+      </nav>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+      <Routes>
+        <Route path="/products/:productId" element={<Product />} />
+        <Route
+          path="/products"
+          element={<h3>Please select a product above</h3>}
+        />
+      </Routes>
+    </div>
+  );
+};
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const Product = () => {
+  const params = useParams();
 
-### `npm run eject`
+  return (
+    <div>
+      <h2>Product {params.productId}</h2>
+    </div>
+  );
+};
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+You can also use the `useNavigate` hook to programmatically navigate through your app.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```jsx
+import { useNavigate } from "react-router-dom";
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+const MyComponent = () => {
+  const navigate = useNavigate();
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  const handleButtonClick = () => {
+    navigate("/about");
+  };
 
-## Learn More
+  return (
+    <div>
+      <button onClick={handleButtonClick}>Go to About Page</button>
+    </div>
+  );
+};
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### MUI - Material-UI
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Material-UI is a popular React component library that follows Google's Material Design guidelines. It provides a set of ready-to-use components and styles that you can easily integrate into your React applications. To use Material-UI, you need to install the `@mui/material` and `@emotion/react` packages.
 
-### Code Splitting
+#### Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
 
-### Analyzing the Bundle Size
+or with Yarn:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+yarn add @mui/material @emotion/react @emotion/styled
+```
 
-### Making a Progressive Web App
+#### Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Once you have installed the required packages, you can start using Material-UI components in your application. Here's an example of using some basic components:
 
-### Advanced Configuration
+```jsx
+import { Button, TextField, Typography } from "@mui/material";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+const MyComponent = () => {
+  return (
+    <div>
+      <Typography variant="h4" color="primary">
+        Hello, Material-UI!
+      </Typography>
+      <TextField label="Enter your name" />
+      <Button variant="contained" color="primary">
+        Click me
+      </Button>
+    </div>
+  );
+};
+```
 
-### Deployment
+#### Theming
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Material-UI also provides theming options, allowing you to customize the colors, typography, and other aspects of the components to match your application's design. You can create a custom theme using the `createTheme` function from `@mui/material/styles` and apply it using the `ThemeProvider` component.
 
-### `npm run build` fails to minify
+```jsx
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Button, TextField, Typography } from "@mui/material";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+const theme = createTheme({
+  typography: {
+    fontFamily: "Roboto, sans-serif",
+  },
+  palette: {
+    primary: {
+      main: "#00bcd4",
+    },
+    secondary: {
+      main: "#ff4081",
+    },
+  },
+});
+
+const MyThemedComponent = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <div>
+        <Typography variant="h4" color="primary">
+          Hello, Material-UI with Custom Theme!
+        </Typography>
+        <TextField label="Enter your name" />
+        <Button variant="contained" color="secondary">
+          Click me
+        </Button>
+      </div>
+    </ThemeProvider>
+  );
+};
+```
+
+#### Material-UI Icons
+
+Material-UI also provides a set of ready-to-use icons that you can easily include in your components.
+
+```jsx
+import { Button, DeleteIcon, SaveIcon } from "@mui/material";
+
+const MyIconComponent = () => {
+  return (
+    <div>
+      <Button variant="contained" color="primary" startIcon={<SaveIcon />}>
+        Save
+      </Button>
+      <Button variant="contained" color="secondary" startIcon={<DeleteIcon />}>
+        Delete
+      </Button>
+    </div>
+  );
+};
+```
+
+#### Material-UI Documentation
+
+To explore all the available components and their properties, you can refer to the official Material-UI documentation: [Material-UI](https://mui.com/)
+
+Material-UI offers a wide range of components and styles that can save you a lot of development time and provide a consistent and attractive UI for your React applications.
+
+### `useContext`
+
+`useContext` is a React hook that allows you to share state between components without having to pass props down through the component tree. It creates a context that can be consumed by any component within its provider.
+
+```jsx
+import React, { createContext, useContext } from "react";
+
+const MyContext = createContext();
+
+const ParentComponent = () => {
+  return (
+    <div>
+      <MyContext.Provider value={{ message: "hello world" }}>
+        <ChildOne />
+        <ChildTwo />
+      </MyContext.Provider>
+    </div>
+  );
+};
+
+const ChildOne = () => {
+  const context = useContext(MyContext);
+
+  return <p>{context.message}</p>;
+};
+
+const ChildTwo = () => {
+  const { message } = useContext(MyContext);
+
+  return <p>{message}</p>;
+};
+```
+
+### `useReducer`
+
+`useReducer` is another React hook that is an alternative to `useState` when managing complex state logic. It is used to handle state transitions through a reducer function, similar to how it's done with Redux.
+
+```jsx
+import { useReducer } from "react";
+
+// Reducer function
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1 };
+    case "DECREMENT":
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+};
+
+const MyComponent = () => {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  const handleIncrement = () => {
+    dispatch({ type: "INCREMENT" });
+  };
+
+  const handleDecrement = () => {
+    dispatch({ type: "DECREMENT" });
+  };
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={handleIncrement}>Increment</button>
+      <button onClick={handleDecrement}>Decrement</button>
+    </div>
+  );
+};
+```
+
+### `useRef`
+
+`useRef` is a hook used to create a mutable reference that persists across renders. It can be used to access DOM elements or store values that won't trigger a re-render when changed.
+
+```jsx
+import { useRef } from "react";
+
+const MyComponent = () => {
+  const inputRef = useRef();
+
+  const handleButtonClick = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input type="text" ref={inputRef} />
+      <button onClick={handleButtonClick}>Focus Input</button>
+    </div>
+  );
+};
+```
+
+### Useful Links
+
+- [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
+- [useContext Hook](https://reactjs.org/docs/hooks-reference.html#usecontext)
+- [useReducer Hook](https://reactjs.org/docs/hooks-reference.html#usereducer)
+- [useRef Hook](https://reactjs.org/docs/hooks-reference.html#useref)
