@@ -1,13 +1,13 @@
 import React from "react";
-import Button from "./Button";
-import RemoveButton from "./RemoveButton";
+import Count from "./Count";
+import DecreaseCount from "./DecreaseCount";
 
 const InBetween = () => {
   return (
     <div>
-      <h2>I'm in between!!!</h2>
-      <Button />
-      <RemoveButton />
+      <h2>I am in between!</h2>
+      <Count />
+      <DecreaseCount />
     </div>
   );
 };

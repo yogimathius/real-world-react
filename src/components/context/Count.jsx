@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import CounterContext from "./CounterContext";
 
 const Count = () => {
-  const { state } = useContext(CounterContext);
+  const { count } = useContext(CounterContext);
 
-  return <div>Count is {state.count}</div>;
+  return <div>The current count is {count}</div>;
 };
 
 export default Count;

@@ -1,40 +1,28 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useState } from "react";
 import CounterContext from "./CounterContext";
-import Count from "./Count";
+import AddCount from "./AddCount";
 import InBetween from "./InBetween";
-import reducer from "../../reducer/reducer";
-import { Button } from "@mui/material";
+import reducer from "../../reducers/reducer";
 
-function CounterProvider({ value, children }) {
-  return (
-    <CounterContext.Provider value={value}>{children}</CounterContext.Provider>
-  );
-}
-
-export default function Parent() {
+const Parent = () => {
+  const [count, setCount] = useState(0);
   const [state, dispatch] = useReducer(reducer, { count: 0 });
-  const countRef = useRef();
 
-  const counterObj = {
-    state,
+  const counterObject = {
+    count: state.count,
+    setCount,
     dispatch,
-  };
-  countRef.current = state.count;
-
-  const showAlert = () => {
-    setTimeout(() => {
-      alert(`the current count is ${countRef.current}`);
-    }, 2000);
   };
 
   return (
     <div>
-      <h2>Parent Component</h2>
-      <CounterProvider value={counterObj}>
-        <Count />
+      <h2>The Parent Component</h2>
+      <CounterContext.Provider value={counterObject}>
         <InBetween />
-        <Button onClick={showAlert}>Show alert</Button>
-      </CounterProvider>
+        <AddCount />
+      </CounterContext.Provider>
     </div>
   );
-}
+};
+
+export default Parent;
